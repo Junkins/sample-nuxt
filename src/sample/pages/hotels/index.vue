@@ -10,6 +10,21 @@
             <div>{{ hotel.address }}</div>
             <el-rate v-model="hotel.rating" :colors="['#2F3D4D', '#64B486', '#4B7C6E']"></el-rate>
           </div>
+          <div>
+            <GmapMap
+                :center="{lat:hotel.lat, lng:hotel.lng}"
+                :zoom="15"
+                map-type-id="terrain"
+                style="width: 500px; height: 300px"
+            >
+                <GmapMarker
+                    :key="index"
+                    :position="{lat:hotel.lat, lng:hotel.lng}"
+                    :clickable="true"
+                    :draggable="true"
+                />
+            </GmapMap>
+          </div>
         </div>
       </el-card>
     </el-col>

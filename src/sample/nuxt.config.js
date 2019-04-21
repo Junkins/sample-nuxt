@@ -21,7 +21,7 @@ module.exports = {
   ** Build configuration
   */
   build: {
-    vendor: ['element-ui'],
+    vendor: ['element-ui', 'vue2-google-maps'],
     /*
     ** Run ESLint on save
     */
@@ -34,10 +34,23 @@ module.exports = {
           exclude: /(node_modules)/
         })
       }
+
+      config.externals = config.externals || [];
+
+      if (!isClient) {
+        config.externals.splice(0, 0, function(context, request, callback) {
+          if (/^vue2-google-maps($|\/)/.test(request)) {
+            callback(null, false);
+          } else {
+            callback();
+          }
+        });
+      }
     }
   },
   plugins: [
-    '~plugins/element-ui'
+    '~plugins/element-ui',
+    { src: '~/plugins/vue2-google-maps.js', ssr: false }
   ],
   css: [
     'element-ui/lib/theme-chalk/index.css'
